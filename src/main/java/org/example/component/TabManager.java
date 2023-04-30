@@ -26,7 +26,8 @@ public class TabManager {
     }
 
     public static void addANewTab(String title) {
-        JPanel tabBody = new JPanel();
+        MainPanel tabBody = new MainPanel();
+        tabBody.add(tabBody.getCodeRightSplitter());
         tabPane.addTab(title, tabBody);
         int index = tabPane.indexOfTab(title);
         JPanel pnlTab = new JPanel(new GridBagLayout());
@@ -34,10 +35,6 @@ public class TabManager {
         JLabel lblTitle = new JLabel(title);
         JButton btnClose = new JButton("x");
         customizeTabCloseButton(btnClose);
-//        btnClose.setOpaque(false);
-////        btnClose.setBorderPainted(false);
-//        btnClose.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-//        btnClose.setContentAreaFilled(false);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx=0;gbc.gridy=0;gbc.weightx=1;
@@ -58,7 +55,7 @@ public class TabManager {
         button.setContentAreaFilled(false);
     }
 
-    public static JPanel currentActiveTabPanel() {
+    public static MainPanel currentActiveTabPanel() {
         int selectedTabIndex = tabPane.getSelectedIndex();
         if(selectedTabIndex == -1) {
             System.out.println("No tab selected");
@@ -66,7 +63,7 @@ public class TabManager {
             int lastTabIndex = totalNumberOfTabs();
             selectedTabIndex = lastTabIndex;
         }
-        return (JPanel) tabPane.getComponentAt(selectedTabIndex);
+        return (MainPanel) tabPane.getComponentAt(selectedTabIndex);
     }
 
     public static int totalNumberOfTabs() {
