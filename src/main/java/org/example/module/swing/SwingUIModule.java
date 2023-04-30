@@ -1,5 +1,8 @@
 package org.example.module.swing;
 
+import org.example.component.CloseableTabbedPane;
+import org.example.component.TabManager;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,11 +17,14 @@ public class SwingUIModule extends JFrame {
         window.setSize(1200, 1080);
         window.setLocationRelativeTo(null);
 
+        TabManager tabManager = new TabManager();
+        JTabbedPane tabPane = TabManager.getTabPane();
+        window.add(tabPane);
+
         messageArea = new JTextArea();
         messageArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(messageArea);
-
-        window.getContentPane().add(scrollPane, BorderLayout.CENTER);
+        TabManager.currentActiveTabPanel().add(scrollPane, BorderLayout.CENTER);
 
         window.setVisible(true);
     }

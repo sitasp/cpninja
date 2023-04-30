@@ -6,7 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class CloseableTabbedPane extends JTabbedPane {
-    JButton closeButton = new JButton("X");
+    JButton closeButton = new JButton("x");
 
     public CloseableTabbedPane() {
         super();
