@@ -1,14 +1,10 @@
 package org.example.component;
 
-import org.example.entity.Problem;
+import org.example.component.panel.MainPanel;
 import org.example.utils.MyCloseActionHandler;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class TabManager {

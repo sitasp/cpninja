@@ -4,7 +4,7 @@ import org.example.module.swing.SwingUIModule;
 
 public class Main {
     public static void main(String[] args) {
-        SwingUIModule uiModule = new SwingUIModule();
+        SwingUIModule uiModule = SwingUIModule.getInstance();
         ServerSocketModule serverModule = new ServerSocketModule(uiModule);
 
         new Thread(() -> {

@@ -1,16 +1,25 @@
 package org.example.module.swing;
 
-import org.example.component.CloseableTabbedPane;
 import org.example.component.TabManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class SwingUIModule extends JFrame {
 
-    private JTextArea messageArea;
+    private static SwingUIModule instance;
+    private static JTextArea messageArea;
 
-    public SwingUIModule() {
+
+    public static SwingUIModule getInstance() {
+        if(Objects.isNull(instance)) {
+            instance = new SwingUIModule();
+        }
+        return instance;
+    }
+
+    private SwingUIModule() {
         super("Server");
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,6 +33,8 @@ public class SwingUIModule extends JFrame {
         messageArea = new JTextArea();
         messageArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(messageArea);
+//        CodePanel codePanel = new CodePanel();
+//        TabManager.currentActiveTabPanel().add(codePanel, BorderLayout.NORTH);
         TabManager.currentActiveTabPanel().add(scrollPane, BorderLayout.CENTER);
 
         window.setVisible(true);

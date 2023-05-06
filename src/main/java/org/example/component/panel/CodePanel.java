@@ -1,17 +1,19 @@
-package org.example.component;
+package org.example.component.panel;
 
+import org.example.component.ButtonActions;
+import org.example.component.ButtonAdditons;
 import org.example.constants.NinjaConstants;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class CodePanel extends JPanel implements ButtonAdditons {
-
     private RSyntaxTextArea codeArea;
     private RTextScrollPane scrollPane;
     private static CodePanel instance;
@@ -29,6 +31,7 @@ public class CodePanel extends JPanel implements ButtonAdditons {
 
         scrollPane = new RTextScrollPane(codeArea);
         add(scrollPane);
+        postInit();
     }
 
     public RSyntaxTextArea getCodeArea() {
@@ -70,7 +73,12 @@ public class CodePanel extends JPanel implements ButtonAdditons {
 
     @Override
     public void addButtons(List<JButton> buttons) {
-
+        JPanel buttonListsPanelForCodePanel = new JPanel();
+        buttonListsPanelForCodePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        for ( JButton button: buttons ) {
+            buttonListsPanelForCodePanel.add(button);
+        }
+        this.add(buttonListsPanelForCodePanel);
     }
 
     @Override

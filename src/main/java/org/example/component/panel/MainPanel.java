@@ -1,9 +1,9 @@
-package org.example.component;
+package org.example.component.panel;
 
 import lombok.Data;
+import org.example.component.panel.CodePanel;
 
 import javax.swing.*;
-import java.awt.*;
 
 @Data
 public class MainPanel extends JPanel {
@@ -15,7 +15,7 @@ public class MainPanel extends JPanel {
     private JSplitPane terminalTestCaseSplitter;
 
     public MainPanel() {
-        codePanel = new JPanel();
+        codePanel = new CodePanel();
         terminalPanel = new JPanel();
         testcasePanel = new JPanel();
 
