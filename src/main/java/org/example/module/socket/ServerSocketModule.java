@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.component.panel.TerminalPanel;
 import org.example.entity.Problem;
 import org.example.module.swing.SwingUIModule;
 import org.json.JSONObject;
@@ -21,11 +22,11 @@ public class ServerSocketModule {
     public void startServer() {
         try {
             ServerSocket serverSocket = new ServerSocket(10042);
-            uiModule.displayMessage("Server listening on port 10042...");
+            TerminalPanel.displayMessage("Server listening on port 10042...");
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                uiModule.displayMessage("Client connected from " + clientSocket.getInetAddress().getHostName());
+                TerminalPanel.displayMessage("Client connected from " + clientSocket.getInetAddress().getHostName());
 
                 try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
                     String inputLine;
@@ -48,10 +49,10 @@ public class ServerSocketModule {
                     if(!payload.isEmpty()) {
                         JSONObject jsonObject = new JSONObject(payload);
                         String requiredData = jsonObject.getString("name");
-                        uiModule.displayMessage("Received payload for problem: " + requiredData);
+                        TerminalPanel.displayMessage("Received payload for problem: " + requiredData);
                         ObjectMapper objectMapper = new ObjectMapper();
                         Problem problem = objectMapper.readValue(payload, Problem.class);
-                        uiModule.displayMessage(problem.toString());
+                        TerminalPanel.displayMessage(problem.toString());
                     }
 
 

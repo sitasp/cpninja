@@ -9,4 +9,9 @@ public class NinjaConstants {
         public static final String COMPILE_AND_RUN      = "Compile & Run";
         public static final String SUBMIT               = "Submit";
     }
+
+    public static class Terminal {
+
+        public static final String CLEAR                       = "Clear";
+    }
 }

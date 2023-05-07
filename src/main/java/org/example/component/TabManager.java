@@ -1,6 +1,7 @@
 package org.example.component;
 
 import org.example.component.panel.MainPanel;
+import org.example.utils.CommonUtils;
 import org.example.utils.MyCloseActionHandler;
 
 import javax.swing.*;
@@ -23,8 +24,13 @@ public class TabManager {
 
     public static void addANewTab(String title) {
         MainPanel tabBody = new MainPanel();
-        tabBody.add(tabBody.getCodeRightSplitter());
+//        tabBody.setPreferredSize(CommonUtils.getScreenSize());
+//        tabBody.setPreferredSize(new Dimension(1000, 1000));
+//        tabBody.add(tabBody.getCodeRightSplitter());
         tabPane.addTab(title, tabBody);
+
+//        fillTheContainer();
+
         int index = tabPane.indexOfTab(title);
         JPanel pnlTab = new JPanel(new GridBagLayout());
         pnlTab.setOpaque(false);
@@ -68,6 +74,26 @@ public class TabManager {
 
     public static int currentActiveTab() {
         return tabPane.getSelectedIndex();
+    }
+
+    private static void fillTheContainer() {
+        int tabIndex = currentActiveTab();
+        MainPanel fullScreenPanel = (MainPanel) tabPane.getComponentAt(tabIndex);
+
+        // Create a new JFrame for the full-screen panel
+        JFrame fullScreenFrame = new JFrame();
+        fullScreenFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fullScreenFrame.getContentPane().add(fullScreenPanel);
+
+        // Set the full-screen properties
+        fullScreenFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        fullScreenFrame.setUndecorated(true);
+
+        // Show the full-screen panel
+        fullScreenFrame.setVisible(true);
+
+        // Remove the panel from the JTabbedPane
+        tabPane.remove(fullScreenPanel);
     }
 }
 

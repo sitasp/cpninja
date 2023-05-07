@@ -28,15 +28,18 @@ public class SwingUIModule extends JFrame {
 
         TabManager tabManager = new TabManager();
         JTabbedPane tabPane = TabManager.getTabPane();
-        window.add(tabPane);
+        window.add(tabPane, BorderLayout.CENTER);
 
-        messageArea = new JTextArea();
-        messageArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(messageArea);
+//        messageArea = new JTextArea();
+//        messageArea.setEditable(false);
+//        JScrollPane scrollPane = new JScrollPane(messageArea);
 //        CodePanel codePanel = new CodePanel();
 //        TabManager.currentActiveTabPanel().add(codePanel, BorderLayout.NORTH);
-        TabManager.currentActiveTabPanel().add(scrollPane, BorderLayout.CENTER);
+//        TabManager.currentActiveTabPanel().add(scrollPane, BorderLayout.CENTER);
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        //below two statements are used at the end
+        window.pack();
         window.setVisible(true);
     }
 
