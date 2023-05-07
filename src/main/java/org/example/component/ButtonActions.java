@@ -26,6 +26,6 @@ public class ButtonActions {
     }
 
     public static void clearTerminal() {
-        TerminalPanel.displayMessage("Hello from clearTerminalFunction()\n");
+        TerminalPanel.clearMessage();
     }
 }

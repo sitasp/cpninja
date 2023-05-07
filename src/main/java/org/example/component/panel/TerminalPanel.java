@@ -3,6 +3,7 @@ package org.example.component.panel;
 import org.example.component.ButtonActions;
 import org.example.component.ButtonAdditons;
 import org.example.constants.NinjaConstants;
+import org.example.module.swing.SwingUIModule;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,8 +27,7 @@ public class TerminalPanel extends JPanel implements ButtonAdditons {
 
     private TerminalPanel() {
         messageArea = new JTextArea();
-        scrollPane = new JScrollPane();
-        scrollPane.add(messageArea);
+        scrollPane = new JScrollPane(messageArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setPreferredSize(new Dimension(300, 200));
         setLayout(new BorderLayout());
@@ -67,7 +67,14 @@ public class TerminalPanel extends JPanel implements ButtonAdditons {
     }
     public static void displayMessage(String message) {
         SwingUtilities.invokeLater(() -> {
+            System.out.println(message);
             messageArea.append(message + "\n");
+        });
+    }
+
+    public static void clearMessage() {
+        SwingUtilities.invokeLater(() -> {
+            messageArea.setText("");
         });
     }
 }
