@@ -15,6 +15,7 @@ public class TerminalPanel extends JPanel implements ButtonAdditons {
     private static JTextArea messageArea;
     private static JScrollPane scrollPane;
     private static TerminalPanel instance;
+    private static JPanel instructionTop;
 
     public static TerminalPanel getInstance() {
         if(Objects.isNull(instance)) {
@@ -29,7 +30,13 @@ public class TerminalPanel extends JPanel implements ButtonAdditons {
         scrollPane.add(messageArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setPreferredSize(new Dimension(300, 200));
-        add(scrollPane);
+        setLayout(new BorderLayout());
+        JLabel label = new JLabel("Messages");
+
+        instructionTop = new JPanel(new BorderLayout());
+        instructionTop.add(label, BorderLayout.WEST);
+        add(instructionTop, BorderLayout.PAGE_START);
+        add(scrollPane, BorderLayout.CENTER);
         postInit();
     }
 
@@ -40,7 +47,7 @@ public class TerminalPanel extends JPanel implements ButtonAdditons {
         for ( JButton button: buttons ) {
             buttonListsPanelForTerminalPanel.add(button);
         }
-        this.add(buttonListsPanelForTerminalPanel);
+        instructionTop.add(buttonListsPanelForTerminalPanel, BorderLayout.EAST);
     }
 
     @Override
