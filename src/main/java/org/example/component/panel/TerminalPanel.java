@@ -29,7 +29,8 @@ public class TerminalPanel extends JPanel implements ButtonAdditons {
         messageArea = new JTextArea();
         scrollPane = new JScrollPane(messageArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setPreferredSize(new Dimension(300, 200));
+        scrollPane.setPreferredSize(new Dimension((int)Math.floor(NinjaConstants.Terminal.TERMINAL_WIDTH),
+                (int)Math.floor(NinjaConstants.Terminal.TERMINAL_HEIGHT)));
         setLayout(new BorderLayout());
         JLabel label = new JLabel("Messages");
 
