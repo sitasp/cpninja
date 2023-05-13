@@ -1,12 +1,9 @@
 package org.example.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.json.JSONPropertyIgnore;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,32 +25,27 @@ public class Problem implements Serializable {
     private IOType output;
     private LanguageTypes languages;
     private Batch batch;
-}
 
-@Data
-class Batch {
-    private String id;
-    private Integer size;
-}
+    public static class Batch {
+        private String id;
+        private Integer size;
+    }
 
-@Data
-class LanguageTypes {
-    private Language java;
-}
+    public static class LanguageTypes {
+        private Language java;
+    }
 
-@Data
-class IOType {
-    private String type;
-}
+    public static class IOType {
+        private String type;
+    }
 
-@Data
-class Language {
-    private String mainClass;
-    private String taskClass;
-}
+    public static class Language {
+        private String mainClass;
+        private String taskClass;
+    }
 
-@Data
-class Test {
-    private String input;
-    private String output;
+    public static class Test {
+        private String input;
+        private String output;
+    }
 }
