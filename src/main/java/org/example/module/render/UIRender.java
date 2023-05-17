@@ -84,7 +84,7 @@ public class UIRender extends JFrame{
         if(Objects.isNull(source)) {
             throw new Exception("Source not found");
         }
-        StringBuilder sb = new StringBuilder(source.getTiny());
+        StringBuilder sb = new StringBuilder();
         parseOtherUrlParams(sb, source, url);
         return sb.toString();
     }

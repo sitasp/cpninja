@@ -7,6 +7,7 @@ public class Java {
         StringBuilder sb = new StringBuilder();
         sb.append("//   ");
         sb.append(s);
+        sb.append("\n");
         return sb.toString();
     }
 }

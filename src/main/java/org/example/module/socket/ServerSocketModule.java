@@ -51,7 +51,7 @@ public class ServerSocketModule {
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
-                    UIRender.renderMessage("Unable to parse the problem");
+                    UIRender.renderMessage("Unable to parse the problem: " + e);
                 }
                 clientSocket.close();
             }

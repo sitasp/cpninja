@@ -18,6 +18,7 @@ public class TabManager {
     public static void addANewTab(String title) {
         MainPanel tabBody = new MainPanel();
         tabPane.addTab(title, tabBody);
+        tabPane.setSelectedComponent(tabBody);
 
         int index = tabPane.indexOfTab(title);
         JPanel pnlTab = new JPanel(new GridBagLayout());
@@ -62,26 +63,6 @@ public class TabManager {
 
     public static int currentActiveTab() {
         return tabPane.getSelectedIndex();
-    }
-
-    private static void fillTheContainer() {
-        int tabIndex = currentActiveTab();
-        MainPanel fullScreenPanel = (MainPanel) tabPane.getComponentAt(tabIndex);
-
-        // Create a new JFrame for the full-screen panel
-        JFrame fullScreenFrame = new JFrame();
-        fullScreenFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fullScreenFrame.getContentPane().add(fullScreenPanel);
-
-        // Set the full-screen properties
-        fullScreenFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        fullScreenFrame.setUndecorated(true);
-
-        // Show the full-screen panel
-        fullScreenFrame.setVisible(true);
-
-        // Remove the panel from the JTabbedPane
-        tabPane.remove(fullScreenPanel);
     }
 }
 

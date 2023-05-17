@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,16 +18,14 @@ public enum Source {
         this.tiny = tiny;
     }
 
-    public static Source parseSourceFromURL(String url) {
+    public static Source parseSourceFromURL(String url) throws Exception {
+        URL newUrl = new URL(url);
+        String host  = newUrl.getHost();
         for(Source source: Source.values()) {
-            Pattern pattern = Pattern.compile("https?://www\\." + source.getSite() + "\\.com/.*");
-            Matcher matcher = pattern.matcher(url);
-
-            if(matcher.find()) {
+            if(host.toLowerCase().contains(source.getSite())) {
                 return source;
             }
         }
-
         return null;
     }
 
