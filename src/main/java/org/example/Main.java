@@ -10,7 +10,7 @@ import java.awt.*;
 public class Main {
     public static void main(String[] args) {
         ServerSocketModule serverModule = new ServerSocketModule();
-        UIRender.initialRendering();
+        UIRender.getInstance();
 
         new Thread(() -> {
             serverModule.startServer();

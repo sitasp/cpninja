@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.Objects;
 
 public class TabManager {
-    private static final JTabbedPane tabPane = new JTabbedPane();
+    private static JTabbedPane tabPane = new JTabbedPane();
 
     public static JTabbedPane getTabPane() {
         return tabPane;

@@ -14,13 +14,39 @@ import org.example.utils.PlatformParser;
 
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
+import java.awt.*;
 import java.util.Objects;
 
-public class UIRender {
-    public static void initialRendering() {
-        String uniqueTitle = "New Tab";
+public class UIRender extends JFrame{
+    private static UIRender instance;
+    public static UIRender getInstance() {
+        if(Objects.isNull(instance)) {
+            instance = new UIRender();
+        }
+        return instance;
+    }
+
+    private UIRender() {
+        super("Server");
+        JFrame window = new JFrame();
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setSize(1200, 1080);
+        window.setLocationRelativeTo(null);
+
+//        TabManager tabManager = new TabManager();
+        JTabbedPane tabPane = TabManager.getTabPane();
+        window.add(tabPane, BorderLayout.CENTER);
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        window.pack();
+        window.setVisible(true);
+        UIRender.initialRendering();
+    }
+
+    private static void initialRendering() {
+        String uniqueTitle = "New Tab 1";
         TabManager.addANewTab(uniqueTitle);
     }
+
 
     public static void startRendering(Problem problem) throws Exception {
         String uniqueTitle = parseProblem(problem);
