@@ -2,6 +2,7 @@ package org.example.component;
 
 import lombok.Data;
 import lombok.ToString;
+import org.example.component.panel.CaseComponentEnums;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,13 +20,31 @@ public class CaseComponent extends JPanel {
     private     String          btnText;
     private     Double          componentHeight;
     private     Double          componentWidth;
+    private     ButtonActions   btnActions;
+    private     Boolean         btnFlag;
+    private     CaseComponentEnums type;
 
-    public CaseComponent(String title, String btnText, Double width, Double height) {
+    public CaseComponent(String title, String btnText, Double width, Double height, ButtonActions btnActions, Boolean btnFlag, CaseComponentEnums type) {
         this.title      = title;
         this.btnText    = btnText;
         this.componentWidth     = width;
         this.componentHeight     = height;
+        this.btnActions     = btnActions;
+        this.btnFlag        = btnFlag;
+        this.type           = type;
         button          = new JButton(btnText);
+        button.setEnabled(btnFlag);
+        switch(type) {
+            case INPUT -> {
+                button.addActionListener( e-> btnActions.runIndividualTask(title));
+            }
+            case OUTPUT -> {
+                button.addActionListener(e -> btnActions.doNothing());
+            }
+            case EXPECTED -> {
+                button.addActionListener( e-> btnActions.deleteTestCase(title));
+            }
+        }
         label           = new JLabel(title);
         text            = new JTextArea();
         scrollPane      = new JScrollPane(text);

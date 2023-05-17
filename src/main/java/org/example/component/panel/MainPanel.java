@@ -1,6 +1,7 @@
 package org.example.component.panel;
 
 import lombok.Data;
+import org.example.component.ButtonActions;
 import org.example.component.panel.CodePanel;
 import org.example.constants.NinjaConstants;
 import org.example.utils.CommonUtils;
@@ -14,6 +15,7 @@ public class MainPanel extends JPanel {
     private JPanel codePanel;
     private JPanel terminalPanel;
     private JPanel testcasePanel;
+    private ButtonActions buttonActions;
     private JSplitPane codeRightSplitter;
     private JSplitPane terminalTestCaseSplitter;
     private JScrollPane scrollPane;
@@ -21,12 +23,15 @@ public class MainPanel extends JPanel {
     private Double testCaseWidth = NinjaConstants.TestCase.SCROLLPANE_WIDTH;
     
     public MainPanel() {
-        codePanel = CodePanel.getInstance();
-        terminalPanel = TerminalPanel.getInstance();
+        buttonActions = new ButtonActions();
+        codePanel = new CodePanel(buttonActions);
+        terminalPanel = new TerminalPanel(buttonActions);
         testcasePanel = new JPanel(new GridLayout(0, 1));
+        buttonActions.setCodePanel(codePanel);
+        buttonActions.setTerminalPanel(terminalPanel);
 
         for(int i=0;i<10;i++){
-            testcasePanel.add(new TestCasePanel(i+1));
+            testcasePanel.add(new TestCasePanel(i+1, buttonActions));
         }
 
         scrollPane = new JScrollPane(testcasePanel);

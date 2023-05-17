@@ -9,14 +9,7 @@ import java.awt.*;
 import java.util.Objects;
 
 public class TabManager {
-    private static JTabbedPane tabPane = null;
-
-    public TabManager() {
-        if(Objects.isNull(tabPane)) {
-            tabPane = new JTabbedPane();
-            addANewTab("New Tab");
-        }
-    }
+    private static final JTabbedPane tabPane = new JTabbedPane();
 
     public static JTabbedPane getTabPane() {
         return tabPane;
@@ -24,12 +17,7 @@ public class TabManager {
 
     public static void addANewTab(String title) {
         MainPanel tabBody = new MainPanel();
-//        tabBody.setPreferredSize(CommonUtils.getScreenSize());
-//        tabBody.setPreferredSize(new Dimension(1000, 1000));
-//        tabBody.add(tabBody.getCodeRightSplitter());
         tabPane.addTab(title, tabBody);
-
-//        fillTheContainer();
 
         int index = tabPane.indexOfTab(title);
         JPanel pnlTab = new JPanel(new GridBagLayout());

@@ -23,4 +23,6 @@ public class NinjaConstants {
         public static Double PANEL_HEIGHT           = 100.0;
         public static Double PANEL_WIDTH            = 150.0;
     }
+
+    public static String DEFAULT_LANGUAGE           = "java";
 }

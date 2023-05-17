@@ -18,26 +18,21 @@ public class CodePanel extends JPanel implements ButtonAdditons {
     private RTextScrollPane scrollPane;
     private static CodePanel instance;
     private GridBagConstraints gbc;
-    public static CodePanel getInstance() {
-        if (instance == null) {
-            instance = new CodePanel();
-        }
-        return instance;
-    }
+    private ButtonActions buttonActions;
+//    public static CodePanel getInstance() {
+//        if (instance == null) {
+//            instance = new CodePanel();
+//        }
+//        return instance;
+//    }
 
-    private CodePanel() {
+    public CodePanel(ButtonActions btnActions) {
         codeArea = new RSyntaxTextArea();
         codeArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         codeArea.setCodeFoldingEnabled(true);
+        this.buttonActions = btnActions;
 
         scrollPane = new RTextScrollPane(codeArea);
-
-//        GridBagLayout layout = new GridBagLayout();
-//        setLayout(layout);
-//        gbc = new GridBagConstraints();
-//        gbc.fill = GridBagConstraints.CENTER;
-//        gbc.gridx = 0;
-//        gbc.gridy = 0;
 
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
@@ -91,10 +86,6 @@ public class CodePanel extends JPanel implements ButtonAdditons {
         }
 
         this.add(buttonListsPanelForCodePanel, BorderLayout.SOUTH);
-//        gbc.gridx = 0;
-//        gbc.gridy = 2;
-//        gbc.fill = GridBagConstraints.HORIZONTAL;
-//        this.add(buttonListsPanelForCodePanel, gbc);
     }
 
     @Override
@@ -105,9 +96,9 @@ public class CodePanel extends JPanel implements ButtonAdditons {
         JButton runBtn              = new JButton(NinjaConstants.MainCodeConstants.RUN);
         JButton compileRunBtn       = new JButton(NinjaConstants.MainCodeConstants.COMPILE_AND_RUN);
 
-        compileBtn.addActionListener( e-> ButtonActions.compileCode());
-        runBtn.addActionListener(e-> ButtonActions.runCode());
-        compileRunBtn.addActionListener(e->ButtonActions.compileAndRunCode());
+        compileBtn.addActionListener( e-> buttonActions.compileCode());
+        runBtn.addActionListener(e-> buttonActions.runCode());
+        compileRunBtn.addActionListener(e-> buttonActions.compileAndRunCode());
 
         buttonList.add(compileBtn);
         buttonList.add(runBtn);
