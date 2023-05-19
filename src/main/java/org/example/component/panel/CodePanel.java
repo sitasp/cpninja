@@ -2,7 +2,11 @@ package org.example.component.panel;
 
 import org.example.component.ButtonActions;
 import org.example.component.ButtonAdditons;
+import org.example.component.TabManager;
 import org.example.constants.NinjaConstants;
+import org.example.entity.Problem;
+import org.example.module.execution.common.Language;
+import org.example.module.execution.java.Java;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -19,6 +23,7 @@ public class CodePanel extends JPanel implements ButtonAdditons {
     private static CodePanel instance;
     private GridBagConstraints gbc;
     private ButtonActions buttonActions;
+    private Problem         problem;
 //    public static CodePanel getInstance() {
 //        if (instance == null) {
 //            instance = new CodePanel();
@@ -26,17 +31,12 @@ public class CodePanel extends JPanel implements ButtonAdditons {
 //        return instance;
 //    }
 
-    public CodePanel(ButtonActions btnActions) {
+    public CodePanel(ButtonActions btnActions, Problem problem) {
         codeArea = new RSyntaxTextArea();
         codeArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         codeArea.setCodeFoldingEnabled(true);
         this.buttonActions = btnActions;
-
-        scrollPane = new RTextScrollPane(codeArea);
-
-        setLayout(new BorderLayout());
-        add(scrollPane, BorderLayout.CENTER);
-
+        this.problem = problem;
         postInit();
     }
 
@@ -108,7 +108,32 @@ public class CodePanel extends JPanel implements ButtonAdditons {
     }
 
     private void postInit()  {
+        scrollPane = new RTextScrollPane(codeArea);
+
+        setLayout(new BorderLayout());
+        add(scrollPane, BorderLayout.CENTER);
+
         List<JButton> buttonListForCodePanel = createButtons();
         addButtons(buttonListForCodePanel);
+        fillExtraDetailsInCodePanel();
+    }
+    private void fillExtraDetailsInCodePanel() {
+        if(Objects.isNull(problem))
+            return;
+        addCommentToCodePanel("Problem: " + problem.getName());
+        addCommentToCodePanel("Contest: " + problem.getGroup());
+        addCommentToCodePanel("URL: " + problem.getUrl());
+        addCommentToCodePanel("Memory Limit: " + problem.getMemoryLimit());
+        addCommentToCodePanel("Time Limit: " + problem.getTimeLimit());
+        addCommentToCodePanel("CP Ninja");
+    }
+
+    private void addCommentToCodePanel(String commentToBeAdded) {
+        Language language = Language.findEnumByValue(NinjaConstants.DEFAULT_LANGUAGE);
+        String cmnt = "";
+        if (Objects.requireNonNull(language) == Language.JAVA) {
+            cmnt = Java.addComments(commentToBeAdded);
+        }
+        codeArea.append(cmnt);
     }
 }

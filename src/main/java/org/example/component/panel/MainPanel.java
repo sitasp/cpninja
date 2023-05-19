@@ -4,10 +4,13 @@ import lombok.Data;
 import org.example.component.ButtonActions;
 import org.example.component.panel.CodePanel;
 import org.example.constants.NinjaConstants;
+import org.example.entity.Problem;
 import org.example.utils.CommonUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
+import java.util.Optional;
 
 @Data
 public class MainPanel extends JPanel {
@@ -22,18 +25,32 @@ public class MainPanel extends JPanel {
     private Double testCaseHeight = NinjaConstants.TestCase.SCROLLPANE_HEIGHT;
     private Double testCaseWidth = NinjaConstants.TestCase.SCROLLPANE_WIDTH;
     
-    public MainPanel() {
+    public MainPanel(Problem problem) {
         buttonActions = new ButtonActions();
-        codePanel = new CodePanel(buttonActions);
+        codePanel = new CodePanel(buttonActions, problem);
         terminalPanel = new TerminalPanel(buttonActions);
         testcasePanel = new JPanel(new GridLayout(0, 1));
         buttonActions.setCodePanel(codePanel);
         buttonActions.setTerminalPanel(terminalPanel);
 
-        for(int i=0;i<10;i++){
-            testcasePanel.add(new TestCasePanel(i+1, buttonActions));
+        int testsLength = 2;
+        if(Objects.nonNull(problem) && Objects.nonNull(problem.getTests())) {
+            testsLength = problem.getTests().size();
         }
+        for(int i=0;i<testsLength;i++){
+            int finalI = i;
+            testcasePanel.add(new TestCasePanel(i+1, buttonActions,
+                    Optional.ofNullable(problem)
+                            .map(Problem::getTests)
+                            .map(e -> e.get(finalI))
+                            .orElse(null)));
+                        //Optional.ofNullable(problem).map(e -> e.getTests()).map(e -> e.get(i)).orElse(null)));
+                        //problem.getTests().get(i)));
+        }
+        postInit();
+    }
 
+    private void postInit() {
         scrollPane = new JScrollPane(testcasePanel);
         scrollPane.setPreferredSize(new Dimension((int)Math.floor(testCaseWidth),
                 (int)Math.floor(testCaseHeight)));

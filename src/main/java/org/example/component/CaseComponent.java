@@ -2,6 +2,7 @@ package org.example.component;
 
 import lombok.Data;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 import org.example.component.panel.CaseComponentEnums;
 
 import javax.swing.*;
@@ -23,8 +24,9 @@ public class CaseComponent extends JPanel {
     private     ButtonActions   btnActions;
     private     Boolean         btnFlag;
     private     CaseComponentEnums type;
+    private     String  textToBePrinted;
 
-    public CaseComponent(String title, String btnText, Double width, Double height, ButtonActions btnActions, Boolean btnFlag, CaseComponentEnums type) {
+    public CaseComponent(String title, String btnText, Double width, Double height, ButtonActions btnActions, Boolean btnFlag, CaseComponentEnums type, String textToBePrinted) {
         this.title      = title;
         this.btnText    = btnText;
         this.componentWidth     = width;
@@ -32,6 +34,7 @@ public class CaseComponent extends JPanel {
         this.btnActions     = btnActions;
         this.btnFlag        = btnFlag;
         this.type           = type;
+        this.textToBePrinted = textToBePrinted;
         button          = new JButton(btnText);
         button.setEnabled(btnFlag);
         switch(type) {
@@ -47,6 +50,9 @@ public class CaseComponent extends JPanel {
         }
         label           = new JLabel(title);
         text            = new JTextArea();
+        if (StringUtils.isNotEmpty(StringUtils.trimToEmpty(textToBePrinted))) {
+            text.setText(textToBePrinted);
+        }
         scrollPane      = new JScrollPane(text);
 
         this.setLayout(new BorderLayout());

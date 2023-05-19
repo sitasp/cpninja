@@ -1,6 +1,7 @@
 package org.example.component;
 
 import org.example.component.panel.MainPanel;
+import org.example.entity.Problem;
 import org.example.utils.CommonUtils;
 import org.example.utils.MyCloseActionHandler;
 
@@ -15,8 +16,8 @@ public class TabManager {
         return tabPane;
     }
 
-    public static void addANewTab(String title) {
-        MainPanel tabBody = new MainPanel();
+    public static void addANewTab(String title, Problem problem) {
+        MainPanel tabBody = new MainPanel(problem);
         tabPane.addTab(title, tabBody);
         tabPane.setSelectedComponent(tabBody);
 

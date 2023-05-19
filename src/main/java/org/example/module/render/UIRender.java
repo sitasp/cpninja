@@ -32,8 +32,6 @@ public class UIRender extends JFrame{
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(1200, 1080);
         window.setLocationRelativeTo(null);
-
-//        TabManager tabManager = new TabManager();
         JTabbedPane tabPane = TabManager.getTabPane();
         window.add(tabPane, BorderLayout.CENTER);
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -44,38 +42,13 @@ public class UIRender extends JFrame{
 
     private static void initialRendering() {
         String uniqueTitle = "New Tab 1";
-        TabManager.addANewTab(uniqueTitle);
+        TabManager.addANewTab(uniqueTitle, null);
     }
 
 
     public static void startRendering(Problem problem) throws Exception {
         String uniqueTitle = parseProblem(problem);
-        TabManager.addANewTab(uniqueTitle);
-        propagateTheDetails(TabManager.currentActiveTabPanel(), problem);
-    }
-
-    private static void propagateTheDetails(MainPanel currentActiveTabPanel, Problem problem) {
-        fillExtraDetailsInCodePanel(currentActiveTabPanel.getCodePanel(), problem);
-    }
-
-    private static void fillExtraDetailsInCodePanel(JPanel codePanel, Problem problem) {
-        addCommentToCodePanel("Problem: " + problem.getName());
-        addCommentToCodePanel("Contest: " + problem.getGroup());
-        addCommentToCodePanel("URL: " + problem.getUrl());
-        addCommentToCodePanel("Memory Limit: " + problem.getMemoryLimit());
-        addCommentToCodePanel("Time Limit: " + problem.getTimeLimit());
-        addCommentToCodePanel("CP Ninja");
-    }
-
-    private static void addCommentToCodePanel(String commentToBeAdded) {
-        Language language = Language.findEnumByValue(NinjaConstants.DEFAULT_LANGUAGE);
-        String cmnt = "";
-        if (Objects.requireNonNull(language) == Language.JAVA) {
-            cmnt = Java.addComments(commentToBeAdded);
-        }
-        CodePanel codePanel;
-        codePanel = (CodePanel) TabManager.currentActiveTabPanel().getCodePanel();
-        codePanel.getCodeArea().append(cmnt);
+        TabManager.addANewTab(uniqueTitle, problem);
     }
 
     private static String parseProblem(Problem problem) throws Exception {
