@@ -2,6 +2,7 @@ package org.example.module.render;
 
 import org.apache.commons.lang3.StringUtils;
 import org.example.component.TabManager;
+import org.example.component.menuComponent.menubar.NinjaMenuBar;
 import org.example.component.panel.CodePanel;
 import org.example.component.panel.MainPanel;
 import org.example.component.panel.TerminalPanel;
@@ -30,14 +31,36 @@ public class UIRender extends JFrame{
         super("Server");
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(1200, 1080);
+        window.setLayout(new BorderLayout());
+
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        int screenWidth = gd.getDisplayMode().getWidth();
+        int screenHeight = gd.getDisplayMode().getHeight();
+
+        // Calculate the maximum width and height (80% of the screen dimensions)
+        int maxWidth = (int) (screenWidth * 1.0);
+        int maxHeight = (int) (screenHeight * 1.0);
+
+        // Set the maximum width and height
+        window.setMaximumSize(new Dimension(maxWidth, maxHeight));
+
+        // Set the preferred size (optional)
+        window.setPreferredSize(new Dimension(maxWidth, maxHeight));
+
         window.setLocationRelativeTo(null);
+
+        NinjaMenuBar menuBar = new NinjaMenuBar();
+        window.setJMenuBar(menuBar);
+        menuBar.setVisible(true);
+
         JTabbedPane tabPane = TabManager.getTabPane();
         window.add(tabPane, BorderLayout.CENTER);
+
+        UIRender.initialRendering();
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        window.setLocationRelativeTo(null);
         window.pack();
         window.setVisible(true);
-        UIRender.initialRendering();
     }
 
     private static void initialRendering() {
