@@ -1,22 +1,17 @@
 package org.example.component.menuComponent.menuitem;
 
-import jiconfont.icons.font_awesome.FontAwesome;
-import jiconfont.swing.IconFontSwing;
-
 import javax.swing.*;
-import javax.swing.event.MenuDragMouseEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
-public class NinjaMenuItem extends JPanel implements ActionListener{
+@Deprecated
+public class NinjaMIv1 extends JPanel implements ActionListener{
     private JLabel  iconLabel;
     private JLabel  titleLabel;
     private JLabel  shortcutLabel;
 
-    public NinjaMenuItem(Icon icon, String text, String shortcutText){
+    public NinjaMIv1(Icon icon, String text, String shortcutText){
         super();
         setLayout(new GridBagLayout());
         setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));

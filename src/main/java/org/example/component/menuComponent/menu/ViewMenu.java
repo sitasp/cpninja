@@ -3,7 +3,6 @@ package org.example.component.menuComponent.menu;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
 import org.example.component.menuComponent.menuitem.NinjaMIv2;
-import org.example.component.menuComponent.menuitem.NinjaMenuItem;
 import org.example.module.render.UIRender;
 
 import javax.swing.*;
