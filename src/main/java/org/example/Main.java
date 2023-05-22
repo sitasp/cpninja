@@ -1,9 +1,8 @@
 package org.example;
-import org.example.component.TabManager;
-import org.example.component.panel.TerminalPanel;
+import org.example.module.loader.BootLoader;
 import org.example.module.render.UIRender;
 import org.example.module.socket.ServerSocketModule;
-import org.example.utils.NinjaPropertyLoader;
+import org.example.module.loader.NinjaPropertyLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +11,7 @@ public class Main {
 
     static {
         NinjaPropertyLoader.getInstance();
+        BootLoader.getInstance();
     }
     public static void main(String[] args) {
         ServerSocketModule serverModule = new ServerSocketModule();

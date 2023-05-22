@@ -13,7 +13,6 @@ public class EditMenu extends JMenu{
     private  NinjaMIv2 settingItem;
     public EditMenu() {
         super("Edit");
-        IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
         settingItem = NinjaMIv2.createNinjaMIv2(
                 IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SETTINGS, 15, new Color(30, 32, 33)),
                 "Settings",

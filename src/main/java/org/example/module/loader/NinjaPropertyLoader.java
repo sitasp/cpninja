@@ -1,7 +1,7 @@
-package org.example.utils;
+package org.example.module.loader;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import org.example.utils.NinjaProperties;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
