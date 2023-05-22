@@ -1,7 +1,10 @@
 package org.example.component.menuComponent.menuitem;
 
+import org.example.utils.NinjaProperties;
+
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Field;
 
 public class NinjaMIv2 extends JMenuItem {
     private JLabel iconLabel;
@@ -21,7 +24,9 @@ public class NinjaMIv2 extends JMenuItem {
         this.shortcutLabel = new JLabel(shortcutText);
         add(shortcutLabel, BorderLayout.EAST);
 
-        customizeShortcuts();
+        customizeShortcut();
+        customizeIcon();
+        customizeTitle();
     }
 
     public static NinjaMIv2 createNinjaMIv2(Icon icon, String text, String shortcutText) {
@@ -29,10 +34,38 @@ public class NinjaMIv2 extends JMenuItem {
         return new NinjaMIv2(icon, text, shortcutText, calculatedText);
     }
 
-    private void customizeShortcuts() {
+    private void customizeShortcut() {
         Font currentFont = shortcutLabel.getFont();
-        Font newFontWithSize = currentFont.deriveFont(currentFont.getSize() - 2f);
+        Font newFontWithSize = currentFont.deriveFont(NinjaProperties.MenuItem.SHORTCUT_FONT_SIZE + 0f);
         shortcutLabel.setFont(newFontWithSize);
-        shortcutLabel.setForeground(Color.DARK_GRAY);
+
+        setColorCode(NinjaProperties.MenuItem.SHORTCUT_FONT_COLOR, shortcutLabel);
+    }
+
+    private void customizeTitle() {
+        Font currentFont = titleLabel.getFont();
+        Font newFontWithSize = currentFont.deriveFont(NinjaProperties.MenuItem.TITLE_FONT_SIZE + 0f);
+        titleLabel.setFont(newFontWithSize);
+
+        setColorCode(NinjaProperties.MenuItem.TITLE_FONT_COLOR, titleLabel);
+    }
+
+    private void customizeIcon() {
+        Font currentFont = iconLabel.getFont();
+        Font newFontWithSize = currentFont.deriveFont(NinjaProperties.MenuItem.ICON_FONT_SIZE + 0f);
+        iconLabel.setFont(newFontWithSize);
+        setColorCode(NinjaProperties.MenuItem.ICON_FONT_COLOR, iconLabel);
+    }
+
+    private static void setColorCode(String colorCode, JLabel label) {
+        try {
+            Field field = Color.class.getDeclaredField(colorCode);
+            field.setAccessible(true);
+            Color color = (Color) field.get(null);
+            System.out.println("Color: " + color);
+            label.setForeground(color);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }

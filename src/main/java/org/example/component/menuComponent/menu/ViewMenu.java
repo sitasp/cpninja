@@ -16,10 +16,6 @@ public class ViewMenu extends JMenu implements ActionListener {
     public ViewMenu() {
         super("View");
         IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
-//        appearanceItem = new NinjaMIv2(
-//                IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SETTINGS, 15, new Color(30, 32, 33)),
-//                "Appearance",
-//                "ctrl+alt+A");
         appearanceItem = NinjaMIv2.createNinjaMIv2(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SETTINGS, 15, new Color(30, 32, 33)),
                 "Appearance",
                 "ctrl+alt+A");
