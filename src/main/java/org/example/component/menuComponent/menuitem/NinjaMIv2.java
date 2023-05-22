@@ -1,10 +1,13 @@
 package org.example.component.menuComponent.menuitem;
 
+import org.apache.commons.lang3.StringUtils;
 import org.example.utils.NinjaProperties;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.annotation.Documented;
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 public class NinjaMIv2 extends JMenuItem {
     private JLabel iconLabel;
@@ -12,26 +15,42 @@ public class NinjaMIv2 extends JMenuItem {
     private JLabel titleLabel;
 
     public NinjaMIv2(Icon icon, String text, String shortcutText, String calculatedText) {
+
+        //can handle if icon and shortcut text is empty or null
         super("  ".repeat(calculatedText.length()));
         setLayout(new BorderLayout());
 
-        this.iconLabel = new JLabel(icon);
+        if(Objects.isNull(icon)){
+            this.iconLabel = new JLabel("   ");
+        }
+        else {
+            this.iconLabel = new JLabel(icon);
+        }
         add(iconLabel, BorderLayout.WEST);
+        customizeIcon();
 
         this.titleLabel = new JLabel(text);
         add(titleLabel, BorderLayout.CENTER);
-
-        this.shortcutLabel = new JLabel(shortcutText);
-        add(shortcutLabel, BorderLayout.EAST);
-
-        customizeShortcut();
-        customizeIcon();
         customizeTitle();
+
+        if(Objects.nonNull(shortcutText) && StringUtils.isNotEmpty(shortcutText)){
+            this.shortcutLabel = new JLabel(shortcutText);
+            add(shortcutLabel, BorderLayout.EAST);
+            customizeShortcut();
+        }
     }
 
     public static NinjaMIv2 createNinjaMIv2(Icon icon, String text, String shortcutText) {
         String calculatedText = "    " + text + "  " + shortcutText + "  ";
         return new NinjaMIv2(icon, text, shortcutText, calculatedText);
+    }
+
+    public static NinjaMIv2 createNinjaMIv2(String text) {
+        return createNinjaMIv2(text, null);
+    }
+
+    public static NinjaMIv2 createNinjaMIv2(String text, String shortcutText) {
+        return createNinjaMIv2(null, text, shortcutText);
     }
 
     private void customizeShortcut() {

@@ -1,5 +1,6 @@
 package org.example.component.menuComponent.menu;
 
+import jiconfont.icons.font_awesome.FontAwesome;
 import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
 import jiconfont.swing.IconFontSwing;
 import org.example.component.menuComponent.menuitem.NinjaMIv2;
@@ -15,7 +16,7 @@ public class ViewMenu extends JMenu implements ActionListener {
     private JMenuItem appearanceItem;
     public ViewMenu() {
         super("View");
-        appearanceItem = NinjaMIv2.createNinjaMIv2(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SETTINGS, 15, new Color(30, 32, 33)),
+        appearanceItem = NinjaMIv2.createNinjaMIv2(IconFontSwing.buildIcon(FontAwesome.LEAF, 15, new Color(30, 32, 33)),
                 "Appearance",
                 "ctrl+alt+A");
         appearanceItem.addActionListener(this);

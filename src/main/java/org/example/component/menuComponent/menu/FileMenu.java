@@ -1,5 +1,6 @@
 package org.example.component.menuComponent.menu;
 
+import org.example.component.menuComponent.menuitem.NinjaMIv2;
 import org.example.module.render.UIRender;
 
 import javax.swing.*;
@@ -12,7 +13,8 @@ public class FileMenu extends JMenu implements ActionListener {
     private JMenuItem exit;
     public FileMenu() {
         super("File");
-        exit = new JMenuItem("Exit");
+//        exit = new JMenuItem("Exit");
+        exit = NinjaMIv2.createNinjaMIv2("Exit");
         exit.addActionListener(this);
         add(exit);
     }
