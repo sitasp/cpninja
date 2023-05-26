@@ -16,7 +16,7 @@ public class ViewMenu extends JMenu implements ActionListener {
     private JMenuItem appearanceItem;
     public ViewMenu() {
         super("View");
-        appearanceItem = NinjaMIv2.createNinjaMIv2(IconFontSwing.buildIcon(FontAwesome.LEAF, 15, new Color(30, 32, 33)),
+        appearanceItem = NinjaMIv2.createNinjaMIv2(IconFontSwing.buildIcon(FontAwesome.LEAF, 15),
                 "Appearance",
                 "ctrl+alt+A");
         appearanceItem.addActionListener(this);

@@ -14,7 +14,7 @@ public class EditMenu extends JMenu{
     public EditMenu() {
         super("Edit");
         settingItem = NinjaMIv2.createNinjaMIv2(
-                IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SETTINGS, 15, new Color(30, 32, 33)),
+                IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SETTINGS, 15),
                 "Settings",
                 "ctrl+alt+S"
         );
