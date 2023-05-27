@@ -10,4 +10,8 @@ public class Java {
         sb.append("\n");
         return sb.toString();
     }
+
+    public static void compileCode(){
+
+    }
 }

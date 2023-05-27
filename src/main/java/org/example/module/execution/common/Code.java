@@ -6,7 +6,7 @@ import org.example.entity.Problem;
 
 @Data
 public class Code {
-    private String   name;               // maybe we can remove it, Lets leave it for this moment
+    private String   name;
     private Language language;
     private Program  program;
     private Problem  problem;
