@@ -17,4 +17,11 @@ public class Message {
         this.time = sdf.format(new Date());
         this.success = true;
     }
+
+    public Message(String source, String message) {
+        this.source = source;
+        this.message = message;
+        this.time = sdf.format(new Date());
+        this.success = true;
+    }
 }

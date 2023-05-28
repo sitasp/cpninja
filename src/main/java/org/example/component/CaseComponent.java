@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 import org.example.component.panel.CaseComponentEnums;
+import org.example.module.execution.common.Program;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,8 +26,9 @@ public class CaseComponent extends JPanel {
     private     Boolean         btnFlag;
     private     CaseComponentEnums type;
     private     String  textToBePrinted;
+    private Program program;
 
-    public CaseComponent(String title, String btnText, Double width, Double height, ButtonActions btnActions, Boolean btnFlag, CaseComponentEnums type, String textToBePrinted) {
+    public CaseComponent(String title, String btnText, Double width, Double height, ButtonActions btnActions, Boolean btnFlag, CaseComponentEnums type, Program program, String textToBePrinted) {
         this.title      = title;
         this.btnText    = btnText;
         this.componentWidth     = width;
@@ -34,12 +36,13 @@ public class CaseComponent extends JPanel {
         this.btnActions     = btnActions;
         this.btnFlag        = btnFlag;
         this.type           = type;
+        this.program        = program;
         this.textToBePrinted = textToBePrinted;
         button          = new JButton(btnText);
         button.setEnabled(btnFlag);
         switch(type) {
             case INPUT -> {
-                button.addActionListener( e-> btnActions.runIndividualTask(title));
+                button.addActionListener( e-> btnActions.runIndividualTask(title, program));
             }
             case OUTPUT -> {
                 button.addActionListener(e -> btnActions.doNothing());

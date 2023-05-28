@@ -7,4 +7,5 @@ public class Program {
     private String  name;
     private String  path;
     private String  source;
+    private String  content;
 }

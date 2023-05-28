@@ -5,6 +5,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.example.component.objects.Message;
 import org.example.component.panel.CodePanel;
 import org.example.component.panel.TerminalPanel;
+import org.example.module.execution.common.CodeDriver;
+import org.example.module.execution.common.Program;
+import org.example.utils.CommonUtils;
 
 import javax.swing.*;
 import java.io.File;
@@ -30,67 +33,35 @@ public class ButtonActions {
         ((TerminalPanel)terminalPanel).displayMessage("Hello from demoFunction()\n");
     }
 
-    public void runCode() {
+    public void runCode(Program program) {
         ((TerminalPanel)terminalPanel).displayMessage("Hello from runFunction()\n");
     }
 
-    public void compileAndRunCode() {
+    public void compileAndRunCode(Program program) {
         ((TerminalPanel)terminalPanel).displayMessage("Hello from compileAndRunFunction()\n");
     }
 
-    public void compileCode() {
+    public void compileCode(Program program) {
+        CodeDriver selectedDriver = CodeDriver.selectDriver();
         String writtenCode = ((CodePanel)codePanel).getCodeArea().getText();
-        File tempFile = null;
-        Message message = new Message();
-        message.setSource("Compiler");
-
-
-        try {
-            tempFile = new File("Main.java");
-            try (FileWriter fileWriter = new FileWriter(tempFile)) {
-                fileWriter.write(writtenCode);
-            }
-            ProcessBuilder processBuilder = new ProcessBuilder("javac", tempFile.getAbsolutePath());
-            Process compileProcess = processBuilder.start();
-            int exitCode = compileProcess.waitFor();
-
-            if(!Objects.equals(exitCode, 0)) {
-                String errorOutput = new String(compileProcess.getErrorStream().readAllBytes());
-                message.setSuccess(false);
-
-                if(StringUtils.isNotEmpty(errorOutput)) {
-                    message.setMessage(errorOutput);
-                }
-                else {
-                    message.setMessage("Code can't be compiled");
-                }
-                ((TerminalPanel)terminalPanel).displayErrorMessage(message);
-                return;
-            }
-            message.setMessage("Compilation successful");
+        program.setContent(writtenCode);
+        ((TerminalPanel)terminalPanel).displayMessage(new Message("Compiler", "Compilation started"));
+        Message message = selectedDriver.compileCode(program);
+        if(message.isSuccess()){
+            ((TerminalPanel)terminalPanel).displaySuccessMessage(new Message("Compiler", "Compilation finished"));
             ((TerminalPanel)terminalPanel).displaySuccessMessage(message);
         }
-        catch (Exception ex) {
-            if(ex instanceof IOException) {
-                message.setMessage("File creation error during compilation: " + ex.getMessage());
-                ((TerminalPanel)terminalPanel).displayErrorMessage(message);
-            }
-            else {
-                message.setMessage("Unhandled error during compilation: " + ex.getMessage());
-                ((TerminalPanel)terminalPanel).displayErrorMessage(message);
-            }
+        else {
+            ((TerminalPanel)terminalPanel).displayMessage(new Message("Compile", "Compilation failed"));
+            ((TerminalPanel)terminalPanel).displayErrorMessage(message);
         }
-        finally {
-            if(Objects.nonNull(tempFile))tempFile.deleteOnExit(); // Delete the file when the JVM exits
-        }
-//        ((TerminalPanel)terminalPanel).displayMessage("Hello from compileFunction()\n" + writtenCode + "\n");
     }
 
     public void clearTerminal() {
         ((TerminalPanel)terminalPanel).clearMessage();
     }
 
-    public void runIndividualTask(String title) {
+    public void runIndividualTask(String title, Program program) {
         ((TerminalPanel)terminalPanel).displayMessage("Running input: " + title + " \n");
     }
 

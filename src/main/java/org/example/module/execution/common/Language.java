@@ -5,7 +5,9 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public enum Language {
-    JAVA("java", true, false, ".java");
+    JAVA("java", true, false, ".java"),
+    C("c", true, false, ".c"),
+    CPP("cpp", true, false, ".cpp");
     private String  value;
     private Boolean isCompiled;
     private Boolean isInterpreted;

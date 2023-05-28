@@ -4,6 +4,7 @@ import org.example.component.ButtonActions;
 import org.example.component.ButtonAdditons;
 import org.example.component.objects.Message;
 import org.example.constants.NinjaConstants;
+import org.example.module.execution.common.Program;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -22,9 +23,11 @@ public class TerminalPanel extends JPanel implements ButtonAdditons {
     private TerminalPanel instance;
     private JPanel instructionTop;
     private ButtonActions btnActions;
+    private Program program;
 
-    public TerminalPanel(ButtonActions btnActions) {
+    public TerminalPanel(ButtonActions btnActions, Program program) {
         messageArea = new JTextPane();
+        this.program = program;
         scrollPane = new JScrollPane(messageArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setPreferredSize(new Dimension((int)Math.floor(NinjaConstants.Terminal.TERMINAL_WIDTH),

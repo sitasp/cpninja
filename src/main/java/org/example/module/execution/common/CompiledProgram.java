@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class CompiledProgram extends Program {
-    private Boolean isCompiled;
+    private Boolean isCompiled = false;
     private String  compilePath;
 }

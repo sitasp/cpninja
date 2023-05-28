@@ -4,6 +4,7 @@ import org.example.component.ButtonActions;
 import org.example.component.CaseComponent;
 import org.example.constants.NinjaConstants;
 import org.example.entity.Problem;
+import org.example.module.execution.common.Program;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,18 +20,20 @@ public class TestCasePanel extends JPanel {
     private Double                  width  = NinjaConstants.TestCase.PANEL_WIDTH;
     private Double                  height = NinjaConstants.TestCase.PANEL_HEIGHT;
     private Problem.Test            test;
-    public TestCasePanel(Integer count, ButtonActions btnActions, Problem.Test test) {
+    private Program program;
+    public TestCasePanel(Integer count, ButtonActions btnActions, Program program, Problem.Test test) {
         this.count = count;
         this.test  = test;
-        input = new CaseComponent(" Input #"+count, "Run", width/3, height, btnActions, true, CaseComponentEnums.INPUT,
+        this.program = program;
+        input = new CaseComponent(" Input #"+count, "Run", width/3, height, btnActions, true, CaseComponentEnums.INPUT, program,
                 Optional.ofNullable(test).map(Problem.Test::getInput).orElse(null)); //Optional.ofNullable(test).map(e -> e.getInput()).orElse(null)
 //        input.setPreferredSize(new Dimension(300, 200));
 
-        output = new CaseComponent(" Output #"+count, "**", width/3, height, btnActions, false, CaseComponentEnums.OUTPUT,
+        output = new CaseComponent(" Output #"+count, "**", width/3, height, btnActions, false, CaseComponentEnums.OUTPUT, program,
                 Optional.ofNullable(test).map(Problem.Test::getInput).orElse(null)); //Optional.ofNullable(test).map(e -> e.getInput()).orElse(null)
 //        output.setPreferredSize(new Dimension(300, 200));
 
-        expected = new CaseComponent(" Expected #"+count, "Del", width/3, height, btnActions, true, CaseComponentEnums.EXPECTED,
+        expected = new CaseComponent(" Expected #"+count, "Del", width/3, height, btnActions, true, CaseComponentEnums.EXPECTED, program,
                 null);
 //        expected.setPreferredSize(new Dimension(300, 200));
 

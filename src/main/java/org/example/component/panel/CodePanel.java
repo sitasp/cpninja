@@ -6,6 +6,7 @@ import org.example.component.TabManager;
 import org.example.constants.NinjaConstants;
 import org.example.entity.Problem;
 import org.example.module.execution.common.Language;
+import org.example.module.execution.common.Program;
 import org.example.module.execution.java.Java;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
@@ -23,18 +24,14 @@ public class CodePanel extends JPanel implements ButtonAdditons {
     private static CodePanel instance;
     private GridBagConstraints gbc;
     private ButtonActions buttonActions;
-    private Problem         problem;
-//    public static CodePanel getInstance() {
-//        if (instance == null) {
-//            instance = new CodePanel();
-//        }
-//        return instance;
-//    }
+    private Program       program;
+    private Problem       problem;
 
-    public CodePanel(ButtonActions btnActions, Problem problem) {
+    public CodePanel(ButtonActions btnActions, Problem problem, Program program) {
         codeArea = new RSyntaxTextArea();
         codeArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         codeArea.setCodeFoldingEnabled(true);
+        this.program = program;
         this.buttonActions = btnActions;
         this.problem = problem;
         postInit();
@@ -96,9 +93,9 @@ public class CodePanel extends JPanel implements ButtonAdditons {
         JButton runBtn              = new JButton(NinjaConstants.MainCodeConstants.RUN);
         JButton compileRunBtn       = new JButton(NinjaConstants.MainCodeConstants.COMPILE_AND_RUN);
 
-        compileBtn.addActionListener( e-> buttonActions.compileCode());
-        runBtn.addActionListener(e-> buttonActions.runCode());
-        compileRunBtn.addActionListener(e-> buttonActions.compileAndRunCode());
+        compileBtn.addActionListener( e-> buttonActions.compileCode(this.program));
+        runBtn.addActionListener(e-> buttonActions.runCode(this.program));
+        compileRunBtn.addActionListener(e-> buttonActions.compileAndRunCode(this.program));
 
         buttonList.add(compileBtn);
         buttonList.add(runBtn);

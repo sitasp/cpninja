@@ -5,6 +5,7 @@ import org.example.component.ButtonActions;
 import org.example.component.panel.CodePanel;
 import org.example.constants.NinjaConstants;
 import org.example.entity.Problem;
+import org.example.module.execution.common.Program;
 import org.example.utils.CommonUtils;
 
 import javax.swing.*;
@@ -22,13 +23,15 @@ public class MainPanel extends JPanel {
     private JSplitPane codeRightSplitter;
     private JSplitPane terminalTestCaseSplitter;
     private JScrollPane scrollPane;
+    private Program program;
     private Double testCaseHeight = NinjaConstants.TestCase.SCROLLPANE_HEIGHT;
     private Double testCaseWidth = NinjaConstants.TestCase.SCROLLPANE_WIDTH;
     
     public MainPanel(Problem problem) {
         buttonActions = new ButtonActions();
-        codePanel = new CodePanel(buttonActions, problem);
-        terminalPanel = new TerminalPanel(buttonActions);
+        program = new Program();
+        codePanel = new CodePanel(buttonActions, problem, program);
+        terminalPanel = new TerminalPanel(buttonActions, program);
         testcasePanel = new JPanel(new GridLayout(0, 1));
         buttonActions.setCodePanel(codePanel);
         buttonActions.setTerminalPanel(terminalPanel);
@@ -39,7 +42,7 @@ public class MainPanel extends JPanel {
         }
         for(int i=0;i<testsLength;i++){
             int finalI = i;
-            testcasePanel.add(new TestCasePanel(i+1, buttonActions,
+            testcasePanel.add(new TestCasePanel(i+1, buttonActions, program,
                     Optional.ofNullable(problem)
                             .map(Problem::getTests)
                             .map(e -> e.get(finalI))
