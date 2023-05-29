@@ -27,9 +27,10 @@ public class MainPanel extends JPanel {
     private Double testCaseHeight = NinjaConstants.TestCase.SCROLLPANE_HEIGHT;
     private Double testCaseWidth = NinjaConstants.TestCase.SCROLLPANE_WIDTH;
     
-    public MainPanel(Problem problem) {
+    public MainPanel(Problem problem, String title) {
         buttonActions = new ButtonActions();
         program = new Program();
+        program.setName(title);
         codePanel = new CodePanel(buttonActions, problem, program);
         terminalPanel = new TerminalPanel(buttonActions, program);
         testcasePanel = new JPanel(new GridLayout(0, 1));

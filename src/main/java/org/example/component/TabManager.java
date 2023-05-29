@@ -17,7 +17,7 @@ public class TabManager {
     }
 
     public static void addANewTab(String title, Problem problem) {
-        MainPanel tabBody = new MainPanel(problem);
+        MainPanel tabBody = new MainPanel(problem, title);
         tabPane.addTab(title, tabBody);
         tabPane.setSelectedComponent(tabBody);
 

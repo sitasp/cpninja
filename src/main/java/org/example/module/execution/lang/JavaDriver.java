@@ -27,16 +27,22 @@ public class JavaDriver extends CodeDriver {
     public Message compileCode(Program program) {
         if(Objects.isNull(super.getProgram())){
             CompiledProgram cp1 = programToCompiledMapper(program);
+            program = cp1;
             super.setProgram(cp1);
         }
         else syncPrograms(program);
-        File file = new File("Main.java");
+        String folderPath = "tasks" + "/" + program.getName();
+        File folder = new File(folderPath);
+        File file = new File(folder, "Main.java");
         Message message = new Message();
         message.setSource("Compiler");
         message.setSuccess(true);
 
 
         try {
+            if (!folder.exists()) {
+                folder.mkdirs();  // Create the folder if it doesn't exist
+            }
             if(file.exists())
                 file.delete();
 
