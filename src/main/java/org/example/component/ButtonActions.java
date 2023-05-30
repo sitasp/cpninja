@@ -5,6 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.example.component.objects.Message;
 import org.example.component.panel.CodePanel;
 import org.example.component.panel.TerminalPanel;
+import org.example.component.panel.TestCasePanel;
+import org.example.entity.Problem;
 import org.example.module.execution.common.CodeDriver;
 import org.example.module.execution.common.Program;
 import org.example.utils.CommonUtils;
@@ -13,7 +15,9 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -70,5 +74,16 @@ public class ButtonActions {
 
     public void deleteTestCase(String title) {
         ((TerminalPanel)terminalPanel).displayMessage("Deleting testcase for: " + title + " \n");
+    }
+
+    public void addANewTest(List<Problem.Test> tests, Program program, JPanel testcaseLayoutHelper, JScrollPane scrollPane) {
+        TestCasePanel testCasePanel = new TestCasePanel(tests.size()+1, this, program, new Problem.Test());
+        tests.add(new Problem.Test());
+        testcaseLayoutHelper.add(testCasePanel);
+        ((TerminalPanel)terminalPanel).displayMessage("Adding a new test case \n");
+
+        scrollPane.setViewportView(testcaseLayoutHelper);
+        scrollPane.revalidate();
+        scrollPane.repaint();
     }
 }

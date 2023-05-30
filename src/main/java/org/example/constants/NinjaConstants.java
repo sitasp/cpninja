@@ -22,6 +22,7 @@ public class NinjaConstants {
         public static Double SCROLLPANE_WIDTH       = 150.0;  //scrollpane_width = panel_width = terminal_width
         public static Double PANEL_HEIGHT           = 100.0;
         public static Double PANEL_WIDTH            = 150.0;
+        public static String ADD_TEST               = "Add Test";
     }
 
     public static String DEFAULT_LANGUAGE           = "java";

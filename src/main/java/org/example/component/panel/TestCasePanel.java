@@ -1,5 +1,6 @@
 package org.example.component.panel;
 
+import lombok.Data;
 import org.example.component.ButtonActions;
 import org.example.component.CaseComponent;
 import org.example.constants.NinjaConstants;
@@ -10,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Optional;
 
+@Data
 public class TestCasePanel extends JPanel {
     private CaseComponent           input;
     private CaseComponent           output;
@@ -17,23 +19,23 @@ public class TestCasePanel extends JPanel {
     private ButtonActions           btnActions;
     private Integer                 count;
     private JScrollPane             scrollPane;
-    private Double                  width  = NinjaConstants.TestCase.PANEL_WIDTH;
-    private Double                  height = NinjaConstants.TestCase.PANEL_HEIGHT;
+    private Double                  tpwidth  = NinjaConstants.TestCase.PANEL_WIDTH;
+    private Double                  tpheight = NinjaConstants.TestCase.PANEL_HEIGHT;
     private Problem.Test            test;
     private Program program;
     public TestCasePanel(Integer count, ButtonActions btnActions, Program program, Problem.Test test) {
         this.count = count;
         this.test  = test;
         this.program = program;
-        input = new CaseComponent(" Input #"+count, "Run", width/3, height, btnActions, true, CaseComponentEnums.INPUT, program,
+        input = new CaseComponent(" Input #"+count, "Run", tpwidth/3, tpheight, btnActions, true, CaseComponentEnums.INPUT, program,
                 Optional.ofNullable(test).map(Problem.Test::getInput).orElse(null)); //Optional.ofNullable(test).map(e -> e.getInput()).orElse(null)
 //        input.setPreferredSize(new Dimension(300, 200));
 
-        output = new CaseComponent(" Output #"+count, "**", width/3, height, btnActions, false, CaseComponentEnums.OUTPUT, program,
+        output = new CaseComponent(" Output #"+count, "**", tpwidth/3, tpheight, btnActions, false, CaseComponentEnums.OUTPUT, program,
                 Optional.ofNullable(test).map(Problem.Test::getInput).orElse(null)); //Optional.ofNullable(test).map(e -> e.getInput()).orElse(null)
 //        output.setPreferredSize(new Dimension(300, 200));
 
-        expected = new CaseComponent(" Expected #"+count, "Del", width/3, height, btnActions, true, CaseComponentEnums.EXPECTED, program,
+        expected = new CaseComponent(" Expected #"+count, "Del", tpwidth/3, tpheight, btnActions, true, CaseComponentEnums.EXPECTED, program,
                 null);
 //        expected.setPreferredSize(new Dimension(300, 200));
 
@@ -42,7 +44,7 @@ public class TestCasePanel extends JPanel {
         this.add(input);
         this.add(output);
         this.add(expected);
-        this.setPreferredSize(new Dimension((int)Math.floor(width), (int)Math.floor(height)));
+        this.setPreferredSize(new Dimension((int)Math.floor(tpwidth), (int)Math.floor(tpheight)));
 //        scrollPane = new JScrollPane(this);
     }
 }

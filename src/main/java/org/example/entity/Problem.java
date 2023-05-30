@@ -108,6 +108,7 @@ public class Problem implements Serializable {
     public static class Test {
         private String input;
         private String output;
+        private boolean isActive = true;
 
         @JsonProperty("input")
         public String getInput() {
@@ -127,6 +128,14 @@ public class Problem implements Serializable {
         @JsonProperty("output")
         public void setOutput(String output) {
             this.output = output;
+        }
+
+        public boolean isActive() {
+            return isActive;
+        }
+
+        public void setActive(boolean isActive) {
+            this.isActive = isActive;
         }
     }
 

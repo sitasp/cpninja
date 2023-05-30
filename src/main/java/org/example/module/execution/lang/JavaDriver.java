@@ -84,9 +84,6 @@ public class JavaDriver extends CodeDriver {
                 return message;
             }
         }
-        finally {
-            file.deleteOnExit(); // Delete the file when the JVM exits
-        }
     }
 
     private void syncPrograms(Program program) {
