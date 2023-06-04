@@ -40,6 +40,12 @@ public class CaseComponent extends JPanel {
         this.textToBePrinted = textToBePrinted;
         button          = new JButton(btnText);
         button.setEnabled(btnFlag);
+        if(!btnFlag) {
+            button.setOpaque(true);
+            button.setContentAreaFilled(true);
+            button.setBorderPainted(false);
+            button.setFocusPainted(false);
+        }
         switch(type) {
             case INPUT -> {
                 button.addActionListener( e-> btnActions.runIndividualTask(title, program));

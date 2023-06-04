@@ -19,8 +19,6 @@ public class TestPanel extends JPanel {
 
     private ButtonActions btnActions;
     private List<Problem.Test> tests;
-
-    private List<TestCasePanel> testCasePanels;
     private Program program;
 
     public TestPanel(Program program, ButtonActions btnActions, List<Problem.Test> tests) {
@@ -36,17 +34,12 @@ public class TestPanel extends JPanel {
         this.setLayout(new GridLayout(0, 1));
         for(int i=0;i<testLength;i++) {
             Optional<Problem.Test> optionalTest = Optional.ofNullable(tests != null ? tests.get(i) : null);
-            testCasePanels = new ArrayList<>();
             if (optionalTest.isPresent()) {
                 TestCasePanel testCasePanel = new TestCasePanel(i + 1, btnActions, program, tests.get(i));
-                testCasePanel.getTest().setActive(true);
                 this.add(testCasePanel);
-                testCasePanels.add(testCasePanel);
             } else {
                 TestCasePanel testCasePanel = new TestCasePanel(i + 1, btnActions, program, new Problem.Test());
-                testCasePanel.getTest().setActive(true);
                 this.add(testCasePanel);
-                testCasePanels.add(testCasePanel);
             }
         }
     }

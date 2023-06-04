@@ -30,9 +30,6 @@ public class MainPanel extends JPanel {
     public MainPanel(Problem problem, String title) {
         buttonActions = new ButtonActions();
         program = new Program();
-        program.setName(title);
-        codePanel = new CodePanel(buttonActions, problem, program);
-        terminalPanel = new TerminalPanel(buttonActions, program);
 
         List<Problem.Test> tests = null;
         if(problem != null){
@@ -43,7 +40,13 @@ public class MainPanel extends JPanel {
             tests.add(new Problem.Test());
             tests.add(new Problem.Test());
         }
+        program.setName(title);
+        program.setTests(tests);
+
         testPanel = new TestPanel(program, buttonActions, tests);
+
+        codePanel = new CodePanel(buttonActions, problem, program, (TestPanel) testPanel);
+        terminalPanel = new TerminalPanel(buttonActions, program);
 
         scrollPane = new JScrollPane(testPanel);
         scrollPane.setPreferredSize(new Dimension((int)Math.floor(testCaseWidth),

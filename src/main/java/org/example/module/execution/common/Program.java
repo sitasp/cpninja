@@ -1,6 +1,9 @@
 package org.example.module.execution.common;
 
 import lombok.Data;
+import org.example.entity.Problem;
+
+import java.util.List;
 
 @Data
 public class Program {
@@ -8,4 +11,5 @@ public class Program {
     private String  path;
     private String  source;
     private String  content;
+    private List<Problem.Test> tests;
 }

@@ -31,12 +31,11 @@ public class TestCasePanel extends JPanel {
                 Optional.ofNullable(test).map(Problem.Test::getInput).orElse(null)); //Optional.ofNullable(test).map(e -> e.getInput()).orElse(null)
 //        input.setPreferredSize(new Dimension(300, 200));
 
-        output = new CaseComponent(" Output #"+count, "**", tpwidth/3, tpheight, btnActions, false, CaseComponentEnums.OUTPUT, program,
-                Optional.ofNullable(test).map(Problem.Test::getInput).orElse(null)); //Optional.ofNullable(test).map(e -> e.getInput()).orElse(null)
+        output = new CaseComponent(" Output #"+count, "**", tpwidth/3, tpheight, btnActions, false, CaseComponentEnums.OUTPUT, program,null); //Optional.ofNullable(test).map(e -> e.getInput()).orElse(null)
 //        output.setPreferredSize(new Dimension(300, 200));
 
         expected = new CaseComponent(" Expected #"+count, "Del", tpwidth/3, tpheight, btnActions, true, CaseComponentEnums.EXPECTED, program,
-                null);
+                Optional.ofNullable(test).map(Problem.Test::getOutput).orElse(null));
 //        expected.setPreferredSize(new Dimension(300, 200));
 
         this.setLayout(new GridLayout(1, 3));
@@ -45,6 +44,5 @@ public class TestCasePanel extends JPanel {
         this.add(output);
         this.add(expected);
         this.setPreferredSize(new Dimension((int)Math.floor(tpwidth), (int)Math.floor(tpheight)));
-//        scrollPane = new JScrollPane(this);
     }
 }

@@ -5,6 +5,8 @@ import org.example.component.ButtonAdditons;
 import org.example.component.TabManager;
 import org.example.constants.NinjaConstants;
 import org.example.entity.Problem;
+import org.example.module.execution.common.CodeDriver;
+import org.example.module.execution.common.CompiledProgram;
 import org.example.module.execution.common.Language;
 import org.example.module.execution.common.Program;
 import org.example.module.execution.java.Java;
@@ -26,15 +28,33 @@ public class CodePanel extends JPanel implements ButtonAdditons {
     private ButtonActions buttonActions;
     private Program       program;
     private Problem       problem;
+    private TestPanel     testPanel;
 
-    public CodePanel(ButtonActions btnActions, Problem problem, Program program) {
+    public CodePanel(ButtonActions btnActions, Problem problem, Program program, TestPanel testPanel) {
         codeArea = new RSyntaxTextArea();
         codeArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         codeArea.setCodeFoldingEnabled(true);
-        this.program = program;
+        this.program = getRelatedProgram(program);
         this.buttonActions = btnActions;
         this.problem = problem;
+        this.testPanel = testPanel;
         postInit();
+    }
+
+    private Program getRelatedProgram(Program program) {
+        String language = NinjaConstants.DEFAULT_LANGUAGE;
+        Language lang = Language.findEnumByValue(language);
+        if(Objects.requireNonNull(lang).isCompiled()) {
+            CompiledProgram cp = new CompiledProgram();
+            cp.setName(program.getName());
+            cp.setTests(program.getTests());
+            cp.setSource(program.getSource());
+            cp.setPath(program.getPath());
+            cp.setContent(program.getContent());
+
+            return cp;
+        }
+        return program;
     }
 
     public RSyntaxTextArea getCodeArea() {
@@ -93,9 +113,11 @@ public class CodePanel extends JPanel implements ButtonAdditons {
         JButton runBtn              = new JButton(NinjaConstants.MainCodeConstants.RUN);
         JButton compileRunBtn       = new JButton(NinjaConstants.MainCodeConstants.COMPILE_AND_RUN);
 
-        compileBtn.addActionListener( e-> buttonActions.compileCode(this.program));
-        runBtn.addActionListener(e-> buttonActions.runCode(this.program));
-        compileRunBtn.addActionListener(e-> buttonActions.compileAndRunCode(this.program));
+        CodeDriver selectedDriver = CodeDriver.selectDriver();
+
+        compileBtn.addActionListener( e-> buttonActions.compileCode(program, selectedDriver));
+        runBtn.addActionListener(e-> buttonActions.runCode(program, this.testPanel, selectedDriver));
+        compileRunBtn.addActionListener(e-> buttonActions.compileAndRunCode(program, selectedDriver));
 
         buttonList.add(compileBtn);
         buttonList.add(runBtn);

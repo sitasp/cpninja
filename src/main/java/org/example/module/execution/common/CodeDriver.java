@@ -2,6 +2,7 @@ package org.example.module.execution.common;
 
 import lombok.Data;
 import org.example.component.objects.Message;
+import org.example.component.panel.TestPanel;
 import org.example.constants.NinjaConstants;
 import org.example.entity.Problem;
 import org.example.module.execution.lang.CDriver;
@@ -28,7 +29,7 @@ public class CodeDriver {
         return null;
     }
 
-    public Message runCode(Program program){
+    public Message runCode(Program program, TestPanel testPanel){
         return null;
     }
 

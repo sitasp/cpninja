@@ -6,8 +6,10 @@ import org.example.component.objects.Message;
 import org.example.component.panel.CodePanel;
 import org.example.component.panel.TerminalPanel;
 import org.example.component.panel.TestCasePanel;
+import org.example.component.panel.TestPanel;
 import org.example.entity.Problem;
 import org.example.module.execution.common.CodeDriver;
+import org.example.module.execution.common.CompiledProgram;
 import org.example.module.execution.common.Program;
 import org.example.utils.CommonUtils;
 
@@ -37,16 +39,33 @@ public class ButtonActions {
         ((TerminalPanel)terminalPanel).displayMessage("Hello from demoFunction()\n");
     }
 
-    public void runCode(Program program) {
-        ((TerminalPanel)terminalPanel).displayMessage("Hello from runFunction()\n");
+    public void runCode(Program program, TestPanel testPanel, CodeDriver selectedDriver) {
+        Message response = null;
+//        Message message = selectedDriver.compileCode(cp);
+        if(program instanceof CompiledProgram) {
+            if(!((CompiledProgram) program).getIsCompiled()){
+                ((TerminalPanel)terminalPanel).displayErrorMessage(new Message("Compiler", "Compile program before running"));
+                return;
+            }
+
+            response = selectedDriver.runCode(program, testPanel);
+        }
+        else response = selectedDriver.runCode(program, testPanel);
+        if(response.isSuccess()){
+            ((TerminalPanel)terminalPanel).displaySuccessMessage(new Message("Compiler", "Compilation finished"));
+            ((TerminalPanel)terminalPanel).displaySuccessMessage(response);
+        }
+        else {
+            ((TerminalPanel)terminalPanel).displayMessage(new Message("Compiler", "Compilation failed"));
+            ((TerminalPanel)terminalPanel).displayErrorMessage(response);
+        }
     }
 
-    public void compileAndRunCode(Program program) {
+    public void compileAndRunCode(Program program, CodeDriver selectedDriver) {
         ((TerminalPanel)terminalPanel).displayMessage("Hello from compileAndRunFunction()\n");
     }
 
-    public void compileCode(Program program) {
-        CodeDriver selectedDriver = CodeDriver.selectDriver();
+    public void compileCode(Program program, CodeDriver selectedDriver) {
         String writtenCode = ((CodePanel)codePanel).getCodeArea().getText();
         program.setContent(writtenCode);
         ((TerminalPanel)terminalPanel).displayMessage(new Message("Compiler", "Compilation started"));
@@ -56,9 +75,18 @@ public class ButtonActions {
             ((TerminalPanel)terminalPanel).displaySuccessMessage(message);
         }
         else {
-            ((TerminalPanel)terminalPanel).displayMessage(new Message("Compile", "Compilation failed"));
+            ((TerminalPanel)terminalPanel).displayMessage(new Message("Compiler", "Compilation failed"));
             ((TerminalPanel)terminalPanel).displayErrorMessage(message);
         }
+    }
+
+    private CompiledProgram programToCompiledMapper(Program program) {
+        CompiledProgram compiledProgram = new CompiledProgram();
+        compiledProgram.setPath(program.getPath());
+        compiledProgram.setName(program.getName());
+        compiledProgram.setContent(program.getContent());
+        compiledProgram.setSource(program.getSource());
+        return compiledProgram;
     }
 
     public void clearTerminal() {
@@ -76,9 +104,9 @@ public class ButtonActions {
         ((TerminalPanel)terminalPanel).displayMessage("Deleting testcase for: " + title + " \n");
     }
 
-    public void addANewTest(List<Problem.Test> tests, Program program, JPanel testcaseLayoutHelper, JScrollPane scrollPane) {
-        TestCasePanel testCasePanel = new TestCasePanel(tests.size()+1, this, program, new Problem.Test());
-        tests.add(new Problem.Test());
+    public void addANewTest(Program program, JPanel testcaseLayoutHelper, JScrollPane scrollPane) {
+        int componentCount = testcaseLayoutHelper.getComponentCount();
+        TestCasePanel testCasePanel = new TestCasePanel(componentCount+1, this, program, new Problem.Test());
         testcaseLayoutHelper.add(testCasePanel);
         ((TerminalPanel)terminalPanel).displayMessage("Adding a new test case \n");
 

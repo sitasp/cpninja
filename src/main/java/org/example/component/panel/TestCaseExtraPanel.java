@@ -52,7 +52,7 @@ public class TestCaseExtraPanel extends JPanel implements ButtonAdditons {
         addTestBtn.setPreferredSize(new Dimension(70, 20));
 
         addTestBtn.addActionListener( e-> {
-            btnActions.addANewTest(tests, program, testPanel, testCaseScrollPane);
+            btnActions.addANewTest(program, testPanel, testCaseScrollPane);
         });
         buttonList.add(addTestBtn);
 

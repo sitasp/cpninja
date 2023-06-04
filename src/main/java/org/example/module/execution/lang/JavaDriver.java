@@ -3,17 +3,22 @@ package org.example.module.execution.lang;
 import org.apache.commons.lang3.StringUtils;
 import org.example.component.objects.Message;
 import org.example.component.panel.TerminalPanel;
+import org.example.component.panel.TestCasePanel;
+import org.example.component.panel.TestPanel;
+import org.example.entity.Problem;
 import org.example.module.execution.common.CodeDriver;
 import org.example.module.execution.common.CompiledProgram;
 import org.example.module.execution.common.Language;
 import org.example.module.execution.common.Program;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.awt.*;
+import java.io.*;
 import java.util.Objects;
 
 public class JavaDriver extends CodeDriver {
+    public static String language_extension = "java";
+    public static String compile_extension = "class";
+    public static String fileName = "Main";
     public JavaDriver() {
         super(Language.JAVA);
     }
@@ -25,19 +30,20 @@ public class JavaDriver extends CodeDriver {
 
     @Override
     public Message compileCode(Program program) {
-        if(Objects.isNull(super.getProgram())){
-            CompiledProgram cp1 = programToCompiledMapper(program);
-            program = cp1;
-            super.setProgram(cp1);
-        }
-        else syncPrograms(program);
+//        if(Objects.isNull(super.getProgram())){
+//            CompiledProgram cp1 = programToCompiledMapper(program);
+//            program = cp1;
+//            super.setProgram(cp1);
+//        }
+//        else syncPrograms(program);
+//        super.getProgram().setContent(program.getContent());
         String folderPath = "tasks" + "/" + program.getName();
         File folder = new File(folderPath);
-        File file = new File(folder, "Main.java");
+        File file = new File(folder, fileName + "." + language_extension);
         Message message = new Message();
         message.setSource("Compiler");
         message.setSuccess(true);
-
+        super.setProgram(program);
 
         try {
             if (!folder.exists()) {
@@ -69,7 +75,7 @@ public class JavaDriver extends CodeDriver {
                 return message;
             }
             ((CompiledProgram)super.getProgram()).setIsCompiled(true);
-            ((CompiledProgram)super.getProgram()).setCompilePath(file.getAbsolutePath());
+            ((CompiledProgram)super.getProgram()).setCompilePath(folder.getAbsolutePath());
             message.setMessage("Compilation successful");
             return message;
         }
@@ -87,6 +93,9 @@ public class JavaDriver extends CodeDriver {
     }
 
     private void syncPrograms(Program program) {
+        CompiledProgram cp1 = programToCompiledMapper(program);
+        program = cp1;
+        super.setProgram(cp1);
         super.getProgram().setContent(program.getContent());
     }
 
@@ -101,7 +110,59 @@ public class JavaDriver extends CodeDriver {
 
 
     @Override
-    public Message runCode(Program program) {
-        return null;
+    public Message runCode(Program program, TestPanel testPanel){
+        String compilePath = ((CompiledProgram)program).getCompilePath();
+        Message message = new Message();
+        message.setSource("Runner");
+        message.setSuccess(true);
+
+        int count = 1;
+        for(Component component: testPanel.getComponents()) {
+            TestCasePanel testCasePanel = ((TestCasePanel) component);
+            testCasePanel.getTest().setInput(testCasePanel.getInput().getText().getText());
+            testCasePanel.getTest().setOutput(testCasePanel.getOutput().getText().getText());
+
+            if(!testCasePanel.getTest().getInput().isEmpty()) {
+                String input = testCasePanel.getTest().getInput();
+                String output = "";
+                //execute this input
+                try {
+                    ProcessBuilder processBuilder = new ProcessBuilder(
+                            "java",
+                            "-cp",
+                            ((CompiledProgram) program).getCompilePath(),
+                            "Main"
+                            );
+                    processBuilder.redirectErrorStream(true);
+                    Process process = processBuilder.start();
+
+                    // Write the input to the process's standard input
+                    process.getOutputStream().write(input.getBytes());
+                    process.getOutputStream().flush();
+                    process.getOutputStream().close();
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        output += line + "\n";
+                    }
+
+                    // Wait for the process to complete
+                    process.waitFor();
+                } catch (IOException | InterruptedException e) {
+                    message.setSuccess(false);
+                    message.setMessage("Couldn't complete execution of testcase" + count++);
+                    e.printStackTrace();
+                }
+
+                testCasePanel.getOutput().getText().setText(output);
+                if(Objects.equals(StringUtils.trimToEmpty(testCasePanel.getOutput().getText().getText()),
+                        StringUtils.trimToEmpty(testCasePanel.getExpected().getText().getText()))) {
+                    testCasePanel.getOutput().getButton().setForeground(Color.WHITE);
+                    testCasePanel.getOutput().getButton().setBackground(Color.GREEN);
+                }
+            }
+        }
+        return message;
     }
 }
